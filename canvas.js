@@ -16,6 +16,8 @@ var currentTime = 0;
 
 var rectangles = []; //A list of objects in the canvas
 
+var animplaying = false;
+
 function draw(){
     //Init canvas and stuff
     const canvas = document.getElementById("canvasdisplay");
@@ -39,7 +41,7 @@ function draw(){
 
             r.color[3] = opacityFromTime(ttn);
             ctx.fillStyle = `rgb(${r.color.join(",")})`;
-            ctx.fillRect((r.x+offsetFromTime(ttn))*globalScale[0],r.y*globalScale[1], r.width*xScaleFromTime(ttn)*globalScale[0], r.height*globalScale[1]);
+            ctx.fillRect(r.x*globalScale[0]+offsetFromTime(ttn)+globalOffset[0] ,r.y*globalScale[1]+globalOffset[1], r.width*xScaleFromTime(ttn)*globalScale[0], r.height*globalScale[1]);
         }
 
         ctx.fillStyle="rgb(0,0,0,1)";
@@ -48,20 +50,27 @@ function draw(){
 
     }
 
-    //TODO: Maybe add a breakpoint
-    window.requestAnimationFrame(draw);
+    if(animplaying){
+        window.requestAnimationFrame(draw);
+    }
 }
 
-export function startAnimation(currentMidiNotes, inputbpm, inputTimeDivision){
+export function startAnimation(currentMidiNotes, inputbpm, inputTimeDivision, inputOffset, inputScale){
+
+    globalOffset = inputOffset;
+    globalScale = inputScale;
 
     midiNotes = currentMidiNotes;
     bpm = inputbpm;
     timePerPulse = parseFloat(60)/bpm*1000/inputTimeDivision;
 
     const canvas = document.getElementById("canvasdisplay");
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    rectangles = [];
     for(var note of midiNotes){
-        var newRect = new Rectangle(note.startTime/2+globalOffset[0], canvas.height-note.note*5+globalOffset[1], note.length/2*globalScale[0], 5*globalScale[1]);
+        var newRect = new Rectangle(note.startTime, canvas.height-note.note*5, note.length, 5);
         newRect.color = [0,0,0,1];
         rectangles.push(newRect);
     }
@@ -72,7 +81,11 @@ export function startAnimation(currentMidiNotes, inputbpm, inputTimeDivision){
 
 
     console.log("drawing...");
-
+    animplaying = true;
     draw();
 
+}
+
+export function stopAnimation(){
+    animplaying = false;
 }

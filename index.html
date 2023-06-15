@@ -16,6 +16,15 @@
         <div style="background:lightgrey; padding:20px; display:grid;">
             <div style="grid-column-start:1;">
                 <h1>MIDI Visualiser</h1>
+                <ol>
+                    <li>Upload a 4/4 MIDI file</li>
+                    <li>Adjust settings then click apply.</li>
+                    <li>(recording) Press "start recording"</li>
+                    <li>Press "Play"</li>
+                    <li>Wait until midi finishes</li>
+                    <li>(recording) Press "stop recording"</li>
+                    <li>(recording) video file should automatically download, video view at the bottom will show preview.</li>
+                </ol>
                 <input id="filereader" type="file"/>
             </div>
             <div style="grid-column-start:2;">
@@ -23,6 +32,15 @@
                 <form id="settingsform" onsubmit="">
                     <label for="bpminput">BPM:</label>
                     <input id="bpminput" type="text" placeholder="120bpm" value="120"/>
+                    <br/>
+                    <label for="xoffset">Offset:</label>
+                    <input id="xoffset", type="text" placeholder="x offset" value="100" style="width: 60px;"/>
+                    <input id="yoffset" , type="text" placeholder="y offset" value="100" style="width: 60px;"/>
+                    <br/>
+                    <label for="xscale">Scale:</label>
+                    <input id="xscale", type="text" placeholder="x scale" value="0.5" style="width: 60px;"/>
+                    <input id="yscale" , type="text" placeholder="y scale" value="1" style="width: 60px;"/>
+                    <br/>
                     <input type="submit" value="apply"/> 
                 </form>
             </div>
@@ -33,10 +51,14 @@
             </div>
         </div>
         <div id="contentLocation">
-            <canvas id="canvasdisplay" style="border: 1px solid black;" width="1400" height="500">
+            <canvas id="canvasdisplay" style="border: 1px solid black; margin: 20px;" width="1400" height="500">
                 
             </canvas>
         </div>
+        <p><a href="https://github.com/Maokus/midi-visualiser-webapp">Check out the source code</a></p>
+        <p><a href="about.html">About</a></p>
+        <p>Note that mkv files dont play correctly on my computer, but if you open on a browser it should play fine. If you want to
+        use it for video editing, you can use a software like handbrake or ffmpeg to convert it.</p>
 
         <video id="videoview" controls></video>
     </body>

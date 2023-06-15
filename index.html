@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MIDI Visualiser</title>
+        <script type="importmap">
+        {
+          "imports": {
+            "midi-parser-js": "https://cdn.jsdelivr.net/npm/midi-parser-js@4.0.4/src/main.min.js",
+            "bezier-easing": "https://cdn.jsdelivr.net/npm/bezier-easing@2.1.0/dist/bezier-easing.min.js"
+          }
+        }
+        </script>
+        <script type="module" src="main.js"></script>
+    </head>
+    <body>
+        <div style="background:lightgrey; padding:20px; display:grid;">
+            <div style="grid-column-start:1;">
+                <h1>MIDI Visualiser</h1>
+                <input id="filereader" type="file"/>
+            </div>
+            <div style="grid-column-start:2;">
+                <h2>Settings</h2>
+                <form id="settingsform" onsubmit="">
+                    <label for="bpminput">BPM:</label>
+                    <input id="bpminput" type="text" placeholder="120bpm" value="120"/>
+                    <input type="submit" value="apply"/> 
+                </form>
+            </div>
+            <div style="grid-column-start:3;">
+                <h2>Playback</h2>
+                <button id="playbutton">play!</button>
+                <button id="recordingbutton">start recording</button>
+            </div>
+        </div>
+        <div id="contentLocation">
+            <canvas id="canvasdisplay" style="border: 1px solid black;" width="1400" height="500">
+                
+            </canvas>
+        </div>
+
+        <video id="videoview" controls></video>
+    </body>
+</html>
